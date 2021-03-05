@@ -1,2 +1,2 @@
 # econ_data_project
-TODO
+Python "web scraping" utility for getting NHL data from the NHL API 
