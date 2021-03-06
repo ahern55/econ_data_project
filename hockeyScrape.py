@@ -3,8 +3,8 @@ import numpy
 import pandas
 
 # Set up the API call variables
-game_data = []
 season_game_counts = []
+header = ['Date', 'Home Team', 'Away Team', 'Period', 'Time Remaining', 'Strength', 'Game Winning Goal', 'Empty Net']
 firstYear = 2010
 lastYear = 2020
 season_type = '02'
@@ -14,7 +14,7 @@ season_type = '02'
 def getNumberOfGamesInSingleSeason(year):
     #build API GET url
     #see https://statsapi.web.nhl.com/api/v1/standings?season=20192020 for reference JSON
-    urlQuery = "https://statsapi.web.nhl.com//api/v1/standings?season=" + str(year) + str(year+1)
+    urlQuery = 'https://statsapi.web.nhl.com//api/v1/standings?season=' + str(year) + str(year+1)
 
     totalGames = 0
 
@@ -36,16 +36,13 @@ def getNumberOfGamesInSingleSeason(year):
 for i in range(firstYear, lastYear):
     season_game_counts.append([i, int(getNumberOfGamesInSingleSeason(i))])
 
-pandas.DataFrame(season_game_counts).to_csv("season_game_counts.csv", header=None, index=None)
-
-#testing
-for i in range(firstYear, lastYear):
-    print(season_game_counts[i-firstYear][1])
+pandas.DataFrame(season_game_counts).to_csv('season_game_counts.csv', header=None, index=None)
 
 #now, we can loop over each of the years (firstYear -> lastYear) to get the goal timing data.
 for year in range (firstYear, lastYear):
+    game_data = []
     # Loop over the games in each season and format the API call
-    for gameId in range(1,season_game_counts[year-firstYear][1]):
+    for gameId in range(1, season_game_counts[year-firstYear][1]):
         gameUrlString = 'https://statsapi.web.nhl.com/api/v1/game/'+ str(year) + season_type +str(gameId).zfill(4)+'/feed/live'
 
         r = requests.get(url=gameUrlString)
@@ -63,13 +60,16 @@ for year in range (firstYear, lastYear):
         allEventsJson = data['liveData']['plays']['allPlays']
 
         for event in allEventsJson:
-            if event["result"]["event"] == "Goal":
-                game_data.append([dateOfGame, homeTeam, awayTeam, str(event["about"]["period"]), event["about"]["periodTimeRemaining"]])
-
+            if event['result']['event'] == 'Goal':
+                game_data.append([dateOfGame, 
+                                    homeTeam, 
+                                    awayTeam, 
+                                    str(event['about']['period']), #perdiod number
+                                    event['about']['periodTimeRemaining'], #time remaining in period
+                                    event['result']['strength']['name'], #power play/Short Handed/even
+                                    event['result']['gameWinningGoal'], #boolean
+                                    event['result']['emptyNet'] #boolean
+                                ])
 
     #now we print to a csv!
-    pandas.DataFrame(game_data).to_csv("results.csv", header=None, index=None)
-
-
-
-
+    pandas.DataFrame(game_data).to_csv(str(year) + '.csv', header=header, index=None)
