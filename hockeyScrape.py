@@ -5,7 +5,7 @@ import pandas
 # Set up the API call variables
 season_game_counts = []
 header = ['Date', 'Home Team', 'Away Team', 'Period', 'Time Remaining', 'Strength', 'Game Winning Goal', 'Empty Net']
-firstYear = 2010
+firstYear = 2018
 lastYear = 2020
 season_type = '02'
 
@@ -60,7 +60,8 @@ for year in range (firstYear, lastYear):
         allEventsJson = data['liveData']['plays']['allPlays']
 
         for event in allEventsJson:
-            if event['result']['event'] == 'Goal':
+            #we only want goal events that are not shootout goals.
+            if event['result']['event'] == 'Goal' and event['about']['periodType'] != "SHOOTOUT":
                 game_data.append([dateOfGame, 
                                     homeTeam, 
                                     awayTeam, 
@@ -72,4 +73,5 @@ for year in range (firstYear, lastYear):
                                 ])
 
     #now we print to a csv!
+    print(year)
     pandas.DataFrame(game_data).to_csv(str(year) + '.csv', header=header, index=None)
