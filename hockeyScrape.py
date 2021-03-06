@@ -62,10 +62,10 @@ for year in range (firstYear, lastYear):
         for event in allEventsJson:
             #we only want goal events that are not shootout goals.
             if event['result']['event'] == 'Goal' and event['about']['periodType'] != "SHOOTOUT":
-                game_data.append([dateOfGame, 
-                                    homeTeam, 
-                                    awayTeam, 
-                                    str(event['about']['period']), #perdiod number
+                game_data.append([dateOfGame,
+                                    homeTeam,
+                                    awayTeam,
+                                    str(event['about']['period']), #period number
                                     event['about']['periodTimeRemaining'], #time remaining in period
                                     event['result']['strength']['name'], #power play/Short Handed/even
                                     event['result']['gameWinningGoal'], #boolean
