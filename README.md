@@ -1,4 +1,4 @@
-# Jason Ahern Economics 4831 Sports Data & Analytics Project
+# Economics 4831 Sports Data & Analytics Project
 Python "web scraping" utility for getting NHL data from the NHL API
 
 ## Source
