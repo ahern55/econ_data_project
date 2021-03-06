@@ -5,7 +5,7 @@ import pandas
 # Set up the API call variables
 season_game_counts = []
 header = ['Date', 'Home Team', 'Away Team', 'Period', 'Time Remaining', 'Strength', 'Game Winning Goal', 'Empty Net']
-firstYear = 2018
+firstYear = 2010
 lastYear = 2020
 season_type = '02'
 
@@ -36,7 +36,7 @@ def getNumberOfGamesInSingleSeason(year):
 for i in range(firstYear, lastYear):
     season_game_counts.append([i, int(getNumberOfGamesInSingleSeason(i))])
 
-pandas.DataFrame(season_game_counts).to_csv('season_game_counts.csv', header=None, index=None)
+pandas.DataFrame(season_game_counts).to_csv('reference/season_game_counts.csv', header=None, index=None)
 
 #now, we can loop over each of the years (firstYear -> lastYear) to get the goal timing data.
 for year in range (firstYear, lastYear):
@@ -74,4 +74,4 @@ for year in range (firstYear, lastYear):
 
     #now we print to a csv!
     print(year)
-    pandas.DataFrame(game_data).to_csv(str(year) + '.csv', header=header, index=None)
+    pandas.DataFrame(game_data).to_csv('data/' + str(year) + '.csv', header=header, index=None)
