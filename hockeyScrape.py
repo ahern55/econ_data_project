@@ -7,6 +7,7 @@ season_game_counts = []
 header = ['Date', 'Home Team', 'Away Team', 'Period', 'Time Remaining', 'Strength', 'Game Winning Goal', 'Empty Net']
 firstYear = 2010
 lastYear = 2020
+#Not looking at playoff games.
 season_type = '02'
 
 
@@ -73,5 +74,5 @@ for year in range (firstYear, lastYear):
                                 ])
 
     #now we print to a csv!
-    print(year)
     pandas.DataFrame(game_data).to_csv('data/' + str(year) + '.csv', header=header, index=None)
+,
