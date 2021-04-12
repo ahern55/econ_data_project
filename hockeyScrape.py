@@ -11,7 +11,7 @@ lastYear = 2020
 season_type = '02'
 
 
-#function to get the number of games in a year. This will also involve an API Call.
+#function to get the number of games in a NHL season. This will also involve an API Call.
 def getNumberOfGamesInSingleSeason(year):
     #build API GET url
     #see https://statsapi.web.nhl.com/api/v1/standings?season=20192020 for reference JSON
