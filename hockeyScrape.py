@@ -1,5 +1,4 @@
 import requests
-import numpy
 import pandas
 
 # Set up the API call variables
@@ -75,4 +74,3 @@ for year in range (firstYear, lastYear):
 
     #now we print to a csv!
     pandas.DataFrame(game_data).to_csv('data/' + str(year) + '.csv', header=header, index=None)
-,
